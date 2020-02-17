@@ -31,7 +31,7 @@ namespace GSATPrediction.Services
             //設定信件內容
             MailMessage mail = new MailMessage()
             {
-                From = new MailAddress(@"chu.predict@gmail.com"),
+                From = new MailAddress(this.mailaddress),
                 SubjectEncoding = Encoding.UTF8,
                 BodyEncoding = Encoding.UTF8
             };
@@ -44,7 +44,7 @@ namespace GSATPrediction.Services
             SmtpClient smtp = new SmtpClient()
             {
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(@"chu.predict@gmail.com", "e215@dbLab"),
+                Credentials = new NetworkCredential(this.mailaddress,this.mailPwd),
                 Port = 587,
                 Host = "smtp.gmail.com",
                 EnableSsl = true

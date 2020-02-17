@@ -96,6 +96,16 @@
   <ItemGroup>
     <Content Include="EmailContentTemplate.html" />
     <Content Include="Global.asax" />
+    <Content Include="Models\UserHistoryModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>UserHistoryModel.Context.cs</LastGenOutput>
+      <DependentUpon>UserHistoryModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\UserHistoryModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UserHistoryModel.edmx</DependentUpon>
+      <LastGenOutput>UserHistoryModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -106,15 +116,61 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\ISend.cs" />
+    <Compile Include="Models\CG.cs">
+      <DependentUpon>UserHistoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\D.cs">
+      <DependentUpon>UserHistoryModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DataOperation.cs" />
+    <Compile Include="Models\DC.cs">
+      <DependentUpon>UserHistoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NewScoreData.cs">
+      <DependentUpon>UserHistoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OldScoreData.cs">
+      <DependentUpon>UserHistoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OutputViewModel.cs" />
     <Compile Include="Models\PredictionData.cs" />
     <Compile Include="Models\QueryData.cs" />
+    <Compile Include="Models\SignUpViewModel.cs" />
+    <Compile Include="Models\T.cs">
+      <DependentUpon>UserHistoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserHistory.cs">
+      <DependentUpon>UserHistoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserHistoryModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserHistoryModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserHistoryModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserHistoryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserHistoryModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserHistoryModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DataMapper.cs" />
     <Compile Include="Services\EmailService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
     <Content Include="ClassDiagram.cd" />
+    <EntityDeploy Include="Models\UserHistoryModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>UserHistoryModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\UserHistoryModel.edmx.diagram">
+      <DependentUpon>UserHistoryModel.edmx</DependentUpon>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\GSATPrediction.pubxml" />
     <None Include="Properties\PublishProfiles\GSATPrediction_dev.pubxml" />

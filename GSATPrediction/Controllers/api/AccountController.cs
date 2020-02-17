@@ -1,5 +1,8 @@
+using GSATPrediction.Models;
+using GSATPrediction.Services;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -7,9 +10,33 @@ using System.Web.Http;
 
 namespace GSATPrediction.Controllers.api
 {
-    [RoutePrefix("api/store")]
+    [RoutePrefix("api/gsat")]
     public class AccountController : ApiController
     {
-        
+        private PredictionEntities db = new PredictionEntities();
+
+        [Route("store")]
+        public IHttpActionResult Post([FromBody] SignUpViewModel signUp)
+        {
+            try
+            {
+                DataMapper data = new DataMapper(signUp);
+                UserHistory user = data.Mapper();
+                db.UserHistories.Add(user);
+                db.SaveChanges();
+                signUp.lineID = "********";
+                OutputViewModel output = new OutputViewModel()
+                {
+                    status = HttpStatusCode.OK,
+                    input = signUp,
+                    message = "資料儲存成功"
+                };
+                return Ok(output);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }           
+        }
     }
 }

@@ -331,12 +331,12 @@ namespace PredictionAPI.Models
             List<PredictionResult> list = null;
             try
             {
-                Dictionary<string, int> SCORE= turnToOldScore(data.grades.gsat);
-                Dictionary<string, int> SCORECOMBIN= computeAllSubjectCombination(SCORE);
-                string cmdStr = appendSQLString(data.groups, data.location, SCORECOMBIN, level, data.property, data.grades.gsat.EngListeningLevel, data.expect_salary,false);
+                Dictionary<string, int> score= turnToOldScore(data.grades.gsat);
+                Dictionary<string, int> scoreCombination = computeAllSubjectCombination(score);
+                string cmdStr = appendSQLString(data.groups, data.location, scoreCombination, level, data.property, data.grades.gsat.EngListeningLevel, data.expect_salary,false);
                 dt = db.search(cmdStr);
                 list = InsertDataToDTO(dt);
-                list = computeRisk(list, dt, SCORECOMBIN);
+                list = computeRisk(list, dt, scoreCombination);
                 dt.Clear();
                 return list;
             }

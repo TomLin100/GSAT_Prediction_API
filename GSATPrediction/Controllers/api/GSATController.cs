@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PredictionAPI.Models;
 using System;
@@ -13,6 +13,7 @@ using System.Web.Http.Cors;
 
 namespace GSATPrediction.Controllers
 {
+    [RoutePrefix("api/gsat")]
     public class GSATController : ApiController
     {
         private StandarLevel level = new StandarLevel();
