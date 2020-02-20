@@ -17,14 +17,17 @@ namespace GSATPrediction.Services
 
         public UserHistory Mapper()
         {
-            UserHistory history = new UserHistory()
+            var history = new UserHistory()
             {
                 id = Guid.NewGuid(),
                 email = _signUp.email,
-                lineID = _signUp.lineID,
+                phone = _signUp.phoneNumber,
+                address = _signUp.address,
                 Hlocation = _signUp.location,
                 identities = _signUp.identity,
-                HSchoolName = _signUp.schoolName,
+                schoolName = _signUp.schoolName,
+                isApplyCHU = _signUp.isApplyCHU,
+                interestedDepart = _signUp.interestedDepart,
                 gsat_Chinese = Convert.ToInt32(_signUp.user_input.grades.gsat.Chinese),
                 gsat_English = Convert.ToInt32(_signUp.user_input.grades.gsat.English),
                 gsat_Math = Convert.ToInt32(_signUp.user_input.grades.gsat.Math),

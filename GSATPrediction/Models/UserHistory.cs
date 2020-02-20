@@ -14,17 +14,15 @@ namespace GSATPrediction.Models
     
     public partial class UserHistory
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public UserHistory()
-        {
-            this.lineID = "不提供";
-        }
-    
         public System.Guid id { get; set; }
         public string email { get; set; }
         public string Hlocation { get; set; }
-        public string lineID { get; set; }
+        public string schoolName { get; set; }
+        public string phone { get; set; }
         public string identities { get; set; }
+        public string address { get; set; }
+        public string interestedDepart { get; set; }
+        public bool isApplyCHU { get; set; }
         public int gsat_Chinese { get; set; }
         public int gsat_English { get; set; }
         public int gsat_Math { get; set; }
@@ -36,6 +34,5 @@ namespace GSATPrediction.Models
         public string ELlevel { get; set; }
         public string UGroup { get; set; }
         public System.DateTime createAt { get; set; }
-        public string HSchoolName { get; set; }
     }
 }

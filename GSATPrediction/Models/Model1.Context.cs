@@ -13,10 +13,10 @@ namespace GSATPrediction.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class PredictionEntities : DbContext
+    public partial class PredictEntities : DbContext
     {
-        public PredictionEntities()
-            : base("name=PredictionEntities")
+        public PredictEntities()
+            : base("name=PredictEntities")
         {
         }
     
@@ -26,11 +26,11 @@ namespace GSATPrediction.Models
         }
     
         public virtual DbSet<CG> CGs { get; set; }
-        public virtual DbSet<D> D { get; set; }
         public virtual DbSet<DC> DCs { get; set; }
         public virtual DbSet<NewScoreData> NewScoreDatas { get; set; }
         public virtual DbSet<OldScoreData> OldScoreDatas { get; set; }
         public virtual DbSet<T> T { get; set; }
         public virtual DbSet<UserHistory> UserHistories { get; set; }
+        public virtual DbSet<D> D { get; set; }
     }
 }

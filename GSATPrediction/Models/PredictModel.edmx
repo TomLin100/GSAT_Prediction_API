@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="PredictionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PredictModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CG">
           <Key>
             <PropertyRef Name="Cname" />
@@ -112,21 +112,24 @@
           </Key>
           <Property Name="id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="email" Type="varchar(max)" Nullable="false" />
-          <Property Name="lineID" Type="nvarchar" MaxLength="50" />
-          <Property Name="Hlocation" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="HSchoolName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="identities" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Hlocation" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="schoolName" Type="nchar" MaxLength="10" />
+          <Property Name="phone" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="identities" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="interestedDepart" Type="nvarchar(max)" />
+          <Property Name="isApplyCHU" Type="tinyint" Nullable="false" />
           <Property Name="gsat_Chinese" Type="int" Nullable="false" />
           <Property Name="gsat_English" Type="int" Nullable="false" />
           <Property Name="gsat_Math" Type="int" Nullable="false" />
           <Property Name="gsat_Science" Type="int" Nullable="false" />
           <Property Name="gsat_Society" Type="int" Nullable="false" />
-          <Property Name="ELlevel" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="property" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="salary" Type="int" Nullable="false" />
-          <Property Name="Ulocation" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Ulocation" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ELlevel" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UGroup" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="createAt" Type="datetime" Nullable="false" StoreGeneratedPattern="None" />
+          <Property Name="createAt" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK_DC_D">
           <End Role="D" Type="Self.D" Multiplicity="1" />
@@ -140,7 +143,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="PredictionModelStoreContainer">
+        <EntityContainer Name="PredictModelStoreContainer">
           <EntitySet Name="CG" EntityType="Self.CG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="D" EntityType="Self.D" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DC" EntityType="Self.DC" Schema="dbo" store:Type="Tables" />
@@ -156,33 +159,109 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="PredictionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="PredictModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="PredictEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CGs" EntityType="PredictModel.CG" />
+          <EntitySet Name="DCs" EntityType="PredictModel.DC" />
+          <EntitySet Name="NewScoreDatas" EntityType="PredictModel.NewScoreData" />
+          <EntitySet Name="OldScoreDatas" EntityType="PredictModel.OldScoreData" />
+          <EntitySet Name="T" EntityType="PredictModel.T" />
+          <EntitySet Name="UserHistories" EntityType="PredictModel.UserHistory" />
+          <EntitySet Name="D" EntityType="PredictModel.D" />
+          <AssociationSet Name="FK_DC_D" Association="PredictModel.FK_DC_D">
+            <End Role="D" EntitySet="D" />
+            <End Role="DC" EntitySet="DCs" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="CG">
           <Key>
             <PropertyRef Name="Cname" />
             <PropertyRef Name="Gname" />
           </Key>
-          <Property Name="Cname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Gname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="DC">
+          <Key>
+            <PropertyRef Name="DID" />
+            <PropertyRef Name="Cname" />
+          </Key>
+          <Property Name="DID" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="Cname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="D" Relationship="PredictModel.FK_DC_D" FromRole="DC" ToRole="D" />
+        </EntityType>
+        <EntityType Name="NewScoreData">
+          <Key>
+            <PropertyRef Name="Ename" />
+            <PropertyRef Name="Score" />
+          </Key>
+          <Property Name="Ename" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="Score" Type="Int32" Nullable="false" />
+          <Property Name="Percentage" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OldScoreData">
+          <Key>
+            <PropertyRef Name="Ename" />
+            <PropertyRef Name="Score" />
+          </Key>
+          <Property Name="Ename" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="Score" Type="Int32" Nullable="false" />
+          <Property Name="Percentage" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T">
+          <Key>
+            <PropertyRef Name="TName" />
+          </Key>
+          <Property Name="TName" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="true" />
+          <Property Name="Grade1" Type="Int32" Nullable="false" />
+          <Property Name="Grade2" Type="Int32" Nullable="false" />
+          <Property Name="Grade3" Type="Int32" Nullable="false" />
+          <Property Name="Grade4" Type="Int32" Nullable="false" />
+          <Property Name="Grade5" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserHistory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Hlocation" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="schoolName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="phone" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="identities" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="interestedDepart" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="isApplyCHU" Type="Boolean" Nullable="false" />
+          <Property Name="gsat_Chinese" Type="Int32" Nullable="false" />
+          <Property Name="gsat_English" Type="Int32" Nullable="false" />
+          <Property Name="gsat_Math" Type="Int32" Nullable="false" />
+          <Property Name="gsat_Science" Type="Int32" Nullable="false" />
+          <Property Name="gsat_Society" Type="Int32" Nullable="false" />
+          <Property Name="property" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="salary" Type="Int32" Nullable="false" />
+          <Property Name="Ulocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ELlevel" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UGroup" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="createAt" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="D">
           <Key>
             <PropertyRef Name="DID" />
           </Key>
-          <Property Name="DID" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DID" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="UName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UURL" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DURL" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Salary" Type="Int32" Nullable="false" />
-          <Property Name="SalaryURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SalaryURL" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TL1" Type="Int32" Nullable="false" />
           <Property Name="TL2" Type="Int32" Nullable="false" />
           <Property Name="TL3" Type="Int32" Nullable="false" />
           <Property Name="TL4" Type="Int32" Nullable="false" />
           <Property Name="TL5" Type="Int32" Nullable="false" />
           <Property Name="TL6" Type="Int32" Nullable="false" />
-          <Property Name="ELLEVEL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ELLEVEL" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="C" Type="Int32" Nullable="false" />
           <Property Name="E" Type="Int32" Nullable="false" />
           <Property Name="M" Type="Int32" Nullable="false" />
@@ -214,77 +293,17 @@
           <Property Name="CMSN" Type="Int32" Nullable="false" />
           <Property Name="EMSN" Type="Int32" Nullable="false" />
           <Property Name="CEMSN" Type="Int32" Nullable="false" />
-          <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PP" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PP" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Change" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="lastCriterion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="rateOfThisYear" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ExamURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="DCs" Relationship="Self.FK_DC_D" FromRole="D" ToRole="DC" />
-        </EntityType>
-        <EntityType Name="DC">
-          <Key>
-            <PropertyRef Name="DID" />
-            <PropertyRef Name="Cname" />
-          </Key>
-          <Property Name="DID" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Cname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="D" Relationship="Self.FK_DC_D" FromRole="DC" ToRole="D" />
-        </EntityType>
-        <EntityType Name="NewScoreData">
-          <Key>
-            <PropertyRef Name="Ename" />
-            <PropertyRef Name="Score" />
-          </Key>
-          <Property Name="Ename" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Score" Type="Int32" Nullable="false" />
-          <Property Name="Percentage" Type="Double" Nullable="false" />
-        </EntityType>
-        <EntityType Name="OldScoreData">
-          <Key>
-            <PropertyRef Name="Ename" />
-            <PropertyRef Name="Score" />
-          </Key>
-          <Property Name="Ename" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Score" Type="Int32" Nullable="false" />
-          <Property Name="Percentage" Type="Double" Nullable="false" />
-        </EntityType>
-        <EntityType Name="T">
-          <Key>
-            <PropertyRef Name="TName" />
-          </Key>
-          <Property Name="TName" Type="String" MaxLength="6" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Grade1" Type="Int32" Nullable="false" />
-          <Property Name="Grade2" Type="Int32" Nullable="false" />
-          <Property Name="Grade3" Type="Int32" Nullable="false" />
-          <Property Name="Grade4" Type="Int32" Nullable="false" />
-          <Property Name="Grade5" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UserHistory">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Hlocation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="lineID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="true" DefaultValue="不提供" />
-          <Property Name="identities" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="gsat_Chinese" Type="Int32" Nullable="false" />
-          <Property Name="gsat_English" Type="Int32" Nullable="false" />
-          <Property Name="gsat_Math" Type="Int32" Nullable="false" />
-          <Property Name="gsat_Science" Type="Int32" Nullable="false" />
-          <Property Name="gsat_Society" Type="Int32" Nullable="false" />
-          <Property Name="property" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="salary" Type="Int32" Nullable="false" />
-          <Property Name="Ulocation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ELlevel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="UGroup" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="createAt" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="None" Precision="3" />
-          <Property Name="HSchoolName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DCs" Relationship="PredictModel.FK_DC_D" FromRole="D" ToRole="DC" />
         </EntityType>
         <Association Name="FK_DC_D">
-          <End Role="D" Type="Self.D" Multiplicity="1" />
-          <End Role="DC" Type="Self.DC" Multiplicity="*" />
+          <End Type="PredictModel.D" Role="D" Multiplicity="1" />
+          <End Type="PredictModel.DC" Role="DC" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="D">
               <PropertyRef Name="DID" />
@@ -294,148 +313,138 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="PredictionEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="CGs" EntityType="Self.CG" />
-          <EntitySet Name="D" EntityType="Self.D" />
-          <EntitySet Name="DCs" EntityType="Self.DC" />
-          <EntitySet Name="NewScoreDatas" EntityType="Self.NewScoreData" />
-          <EntitySet Name="OldScoreDatas" EntityType="Self.OldScoreData" />
-          <EntitySet Name="T" EntityType="Self.T" />
-          <EntitySet Name="UserHistories" EntityType="Self.UserHistory" />
-          <AssociationSet Name="FK_DC_D" Association="Self.FK_DC_D">
-            <End Role="D" EntitySet="D" />
-            <End Role="DC" EntitySet="DCs" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="PredictionModelStoreContainer" CdmEntityContainer="PredictionEntities">
+        <EntityContainerMapping StorageEntityContainer="PredictModelStoreContainer" CdmEntityContainer="PredictEntities">
           <EntitySetMapping Name="CGs">
-            <EntityTypeMapping TypeName="PredictionModel.CG">
+            <EntityTypeMapping TypeName="PredictModel.CG">
               <MappingFragment StoreEntitySet="CG">
-                <ScalarProperty Name="Cname" ColumnName="Cname" />
                 <ScalarProperty Name="Gname" ColumnName="Gname" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="D">
-            <EntityTypeMapping TypeName="PredictionModel.D">
-              <MappingFragment StoreEntitySet="D">
-                <ScalarProperty Name="DID" ColumnName="DID" />
-                <ScalarProperty Name="UName" ColumnName="UName" />
-                <ScalarProperty Name="UURL" ColumnName="UURL" />
-                <ScalarProperty Name="DName" ColumnName="DName" />
-                <ScalarProperty Name="DURL" ColumnName="DURL" />
-                <ScalarProperty Name="Salary" ColumnName="Salary" />
-                <ScalarProperty Name="SalaryURL" ColumnName="SalaryURL" />
-                <ScalarProperty Name="TL1" ColumnName="TL1" />
-                <ScalarProperty Name="TL2" ColumnName="TL2" />
-                <ScalarProperty Name="TL3" ColumnName="TL3" />
-                <ScalarProperty Name="TL4" ColumnName="TL4" />
-                <ScalarProperty Name="TL5" ColumnName="TL5" />
-                <ScalarProperty Name="TL6" ColumnName="TL6" />
-                <ScalarProperty Name="ELLEVEL" ColumnName="ELLEVEL" />
-                <ScalarProperty Name="C" ColumnName="C" />
-                <ScalarProperty Name="E" ColumnName="E" />
-                <ScalarProperty Name="M" ColumnName="M" />
-                <ScalarProperty Name="S" ColumnName="S" />
-                <ScalarProperty Name="N" ColumnName="N" />
-                <ScalarProperty Name="CE" ColumnName="CE" />
-                <ScalarProperty Name="CM" ColumnName="CM" />
-                <ScalarProperty Name="CS" ColumnName="CS" />
-                <ScalarProperty Name="CN" ColumnName="CN" />
-                <ScalarProperty Name="EM" ColumnName="EM" />
-                <ScalarProperty Name="ES" ColumnName="ES" />
-                <ScalarProperty Name="EN" ColumnName="EN" />
-                <ScalarProperty Name="MS" ColumnName="MS" />
-                <ScalarProperty Name="MN" ColumnName="MN" />
-                <ScalarProperty Name="SN" ColumnName="SN" />
-                <ScalarProperty Name="CEM" ColumnName="CEM" />
-                <ScalarProperty Name="CES" ColumnName="CES" />
-                <ScalarProperty Name="CEN" ColumnName="CEN" />
-                <ScalarProperty Name="CMS" ColumnName="CMS" />
-                <ScalarProperty Name="CMN" ColumnName="CMN" />
-                <ScalarProperty Name="CSN" ColumnName="CSN" />
-                <ScalarProperty Name="EMS" ColumnName="EMS" />
-                <ScalarProperty Name="EMN" ColumnName="EMN" />
-                <ScalarProperty Name="ESN" ColumnName="ESN" />
-                <ScalarProperty Name="MSN" ColumnName="MSN" />
-                <ScalarProperty Name="CEMS" ColumnName="CEMS" />
-                <ScalarProperty Name="CEMN" ColumnName="CEMN" />
-                <ScalarProperty Name="CESN" ColumnName="CESN" />
-                <ScalarProperty Name="CMSN" ColumnName="CMSN" />
-                <ScalarProperty Name="EMSN" ColumnName="EMSN" />
-                <ScalarProperty Name="CEMSN" ColumnName="CEMSN" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="PP" ColumnName="PP" />
-                <ScalarProperty Name="Change" ColumnName="Change" />
-                <ScalarProperty Name="lastCriterion" ColumnName="lastCriterion" />
-                <ScalarProperty Name="rateOfThisYear" ColumnName="rateOfThisYear" />
-                <ScalarProperty Name="ExamURL" ColumnName="ExamURL" />
+                <ScalarProperty Name="Cname" ColumnName="Cname" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DCs">
-            <EntityTypeMapping TypeName="PredictionModel.DC">
+            <EntityTypeMapping TypeName="PredictModel.DC">
               <MappingFragment StoreEntitySet="DC">
-                <ScalarProperty Name="DID" ColumnName="DID" />
                 <ScalarProperty Name="Cname" ColumnName="Cname" />
+                <ScalarProperty Name="DID" ColumnName="DID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NewScoreDatas">
-            <EntityTypeMapping TypeName="PredictionModel.NewScoreData">
+            <EntityTypeMapping TypeName="PredictModel.NewScoreData">
               <MappingFragment StoreEntitySet="NewScoreData">
-                <ScalarProperty Name="Ename" ColumnName="Ename" />
-                <ScalarProperty Name="Score" ColumnName="Score" />
                 <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="Ename" ColumnName="Ename" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OldScoreDatas">
-            <EntityTypeMapping TypeName="PredictionModel.OldScoreData">
+            <EntityTypeMapping TypeName="PredictModel.OldScoreData">
               <MappingFragment StoreEntitySet="OldScoreData">
-                <ScalarProperty Name="Ename" ColumnName="Ename" />
-                <ScalarProperty Name="Score" ColumnName="Score" />
                 <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="Ename" ColumnName="Ename" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="T">
-            <EntityTypeMapping TypeName="PredictionModel.T">
+            <EntityTypeMapping TypeName="PredictModel.T">
               <MappingFragment StoreEntitySet="T">
-                <ScalarProperty Name="TName" ColumnName="TName" />
-                <ScalarProperty Name="Grade1" ColumnName="Grade1" />
-                <ScalarProperty Name="Grade2" ColumnName="Grade2" />
-                <ScalarProperty Name="Grade3" ColumnName="Grade3" />
-                <ScalarProperty Name="Grade4" ColumnName="Grade4" />
                 <ScalarProperty Name="Grade5" ColumnName="Grade5" />
+                <ScalarProperty Name="Grade4" ColumnName="Grade4" />
+                <ScalarProperty Name="Grade3" ColumnName="Grade3" />
+                <ScalarProperty Name="Grade2" ColumnName="Grade2" />
+                <ScalarProperty Name="Grade1" ColumnName="Grade1" />
+                <ScalarProperty Name="TName" ColumnName="TName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserHistories">
-            <EntityTypeMapping TypeName="PredictionModel.UserHistory">
+            <EntityTypeMapping TypeName="IsTypeOf(PredictModel.UserHistory)">
               <MappingFragment StoreEntitySet="UserHistory">
                 <ScalarProperty Name="createAt" ColumnName="createAt" />
-                <ScalarProperty Name="HSchoolName" ColumnName="HSchoolName" />
-                <ScalarProperty Name="UGroup" ColumnName="UGroup" />
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="Hlocation" ColumnName="Hlocation" />
-                <ScalarProperty Name="lineID" ColumnName="lineID" />
-                <ScalarProperty Name="identities" ColumnName="identities" />
-                <ScalarProperty Name="gsat_Chinese" ColumnName="gsat_Chinese" />
-                <ScalarProperty Name="gsat_English" ColumnName="gsat_English" />
-                <ScalarProperty Name="gsat_Math" ColumnName="gsat_Math" />
-                <ScalarProperty Name="gsat_Science" ColumnName="gsat_Science" />
-                <ScalarProperty Name="gsat_Society" ColumnName="gsat_Society" />
-                <ScalarProperty Name="property" ColumnName="property" />
-                <ScalarProperty Name="salary" ColumnName="salary" />
-                <ScalarProperty Name="Ulocation" ColumnName="Ulocation" />
+                <ScalarProperty Name="UGroup" ColumnName="UGroup" />
                 <ScalarProperty Name="ELlevel" ColumnName="ELlevel" />
+                <ScalarProperty Name="Ulocation" ColumnName="Ulocation" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+                <ScalarProperty Name="property" ColumnName="property" />
+                <ScalarProperty Name="gsat_Society" ColumnName="gsat_Society" />
+                <ScalarProperty Name="gsat_Science" ColumnName="gsat_Science" />
+                <ScalarProperty Name="gsat_Math" ColumnName="gsat_Math" />
+                <ScalarProperty Name="gsat_English" ColumnName="gsat_English" />
+                <ScalarProperty Name="gsat_Chinese" ColumnName="gsat_Chinese" />
+                <ScalarProperty Name="isApplyCHU" ColumnName="isApplyCHU" />
+                <ScalarProperty Name="interestedDepart" ColumnName="interestedDepart" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="identities" ColumnName="identities" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="schoolName" ColumnName="schoolName" />
+                <ScalarProperty Name="Hlocation" ColumnName="Hlocation" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="D">
+            <EntityTypeMapping TypeName="PredictModel.D">
+              <MappingFragment StoreEntitySet="D">
+                <ScalarProperty Name="ExamURL" ColumnName="ExamURL" />
+                <ScalarProperty Name="rateOfThisYear" ColumnName="rateOfThisYear" />
+                <ScalarProperty Name="lastCriterion" ColumnName="lastCriterion" />
+                <ScalarProperty Name="Change" ColumnName="Change" />
+                <ScalarProperty Name="PP" ColumnName="PP" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="CEMSN" ColumnName="CEMSN" />
+                <ScalarProperty Name="EMSN" ColumnName="EMSN" />
+                <ScalarProperty Name="CMSN" ColumnName="CMSN" />
+                <ScalarProperty Name="CESN" ColumnName="CESN" />
+                <ScalarProperty Name="CEMN" ColumnName="CEMN" />
+                <ScalarProperty Name="CEMS" ColumnName="CEMS" />
+                <ScalarProperty Name="MSN" ColumnName="MSN" />
+                <ScalarProperty Name="ESN" ColumnName="ESN" />
+                <ScalarProperty Name="EMN" ColumnName="EMN" />
+                <ScalarProperty Name="EMS" ColumnName="EMS" />
+                <ScalarProperty Name="CSN" ColumnName="CSN" />
+                <ScalarProperty Name="CMN" ColumnName="CMN" />
+                <ScalarProperty Name="CMS" ColumnName="CMS" />
+                <ScalarProperty Name="CEN" ColumnName="CEN" />
+                <ScalarProperty Name="CES" ColumnName="CES" />
+                <ScalarProperty Name="CEM" ColumnName="CEM" />
+                <ScalarProperty Name="SN" ColumnName="SN" />
+                <ScalarProperty Name="MN" ColumnName="MN" />
+                <ScalarProperty Name="MS" ColumnName="MS" />
+                <ScalarProperty Name="EN" ColumnName="EN" />
+                <ScalarProperty Name="ES" ColumnName="ES" />
+                <ScalarProperty Name="EM" ColumnName="EM" />
+                <ScalarProperty Name="CN" ColumnName="CN" />
+                <ScalarProperty Name="CS" ColumnName="CS" />
+                <ScalarProperty Name="CM" ColumnName="CM" />
+                <ScalarProperty Name="CE" ColumnName="CE" />
+                <ScalarProperty Name="N" ColumnName="N" />
+                <ScalarProperty Name="S" ColumnName="S" />
+                <ScalarProperty Name="M" ColumnName="M" />
+                <ScalarProperty Name="E" ColumnName="E" />
+                <ScalarProperty Name="C" ColumnName="C" />
+                <ScalarProperty Name="ELLEVEL" ColumnName="ELLEVEL" />
+                <ScalarProperty Name="TL6" ColumnName="TL6" />
+                <ScalarProperty Name="TL5" ColumnName="TL5" />
+                <ScalarProperty Name="TL4" ColumnName="TL4" />
+                <ScalarProperty Name="TL3" ColumnName="TL3" />
+                <ScalarProperty Name="TL2" ColumnName="TL2" />
+                <ScalarProperty Name="TL1" ColumnName="TL1" />
+                <ScalarProperty Name="SalaryURL" ColumnName="SalaryURL" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="DURL" ColumnName="DURL" />
+                <ScalarProperty Name="DName" ColumnName="DName" />
+                <ScalarProperty Name="UURL" ColumnName="UURL" />
+                <ScalarProperty Name="UName" ColumnName="UName" />
+                <ScalarProperty Name="DID" ColumnName="DID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
