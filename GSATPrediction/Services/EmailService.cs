@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace GSATPrediction.Services
@@ -23,7 +24,7 @@ namespace GSATPrediction.Services
         {
             this.mailaddress = ConfigurationManager.AppSettings["mailaddress"];
             this.mailPwd = ConfigurationManager.AppSettings["mailPwd"];
-            this.mailContent = File.ReadAllText("EmailContentTemplate.html");
+            this.mailContent = File.ReadAllText(HttpContext.Current.Server.MapPath("~/EmailContentTemplate.html"));
         }
 
         public void send()
@@ -37,13 +38,15 @@ namespace GSATPrediction.Services
             };
 
             mail.To.Add(ReceiveAddress);
-            mail.Attachments.Add(new Attachment(@"D:\test2.docx"));
-            AlternateView view = AlternateView.CreateAlternateViewFromString(this.mailContent,Encoding.UTF8,"text/html");
+            mail.Subject = "升大學職涯型落點分析-免費密勝秘笈";
+            mail.Attachments.Add(new Attachment(@"D:\test.pdf"));
+            var view = AlternateView.CreateAlternateViewFromString(this.mailContent,Encoding.UTF8,"text/html");
             mail.AlternateViews.Add(view);
+
             //設定SMTP
             SmtpClient smtp = new SmtpClient()
             {
-                UseDefaultCredentials = false,
+                //UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(this.mailaddress,this.mailPwd),
                 Port = 587,
                 Host = "smtp.gmail.com",

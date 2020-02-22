@@ -32,7 +32,6 @@ namespace GSATPrediction.Models
         public int TL3 { get; set; }
         public int TL4 { get; set; }
         public int TL5 { get; set; }
-        public int TL6 { get; set; }
         public string ELLEVEL { get; set; }
         public int C { get; set; }
         public int E { get; set; }

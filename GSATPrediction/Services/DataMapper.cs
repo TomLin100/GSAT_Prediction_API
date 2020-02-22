@@ -26,7 +26,7 @@ namespace GSATPrediction.Services
                 Hlocation = _signUp.location,
                 identities = _signUp.identity,
                 schoolName = _signUp.schoolName,
-                isApplyCHU = _signUp.isApplyCHU,
+                isApplyCHU = _signUp.isApplyCHU ? 1 : 0,
                 interestedDepart = _signUp.interestedDepart,
                 gsat_Chinese = Convert.ToInt32(_signUp.user_input.grades.gsat.Chinese),
                 gsat_English = Convert.ToInt32(_signUp.user_input.grades.gsat.English),

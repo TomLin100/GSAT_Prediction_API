@@ -22,7 +22,7 @@ namespace GSATPrediction.Models
         public string identities { get; set; }
         public string address { get; set; }
         public string interestedDepart { get; set; }
-        public bool isApplyCHU { get; set; }
+        public int isApplyCHU { get; set; }
         public int gsat_Chinese { get; set; }
         public int gsat_English { get; set; }
         public int gsat_Math { get; set; }

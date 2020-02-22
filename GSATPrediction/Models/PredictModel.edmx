@@ -17,10 +17,10 @@
           <Key>
             <PropertyRef Name="DID" />
           </Key>
-          <Property Name="DID" Type="nvarchar" MaxLength="6" Nullable="false" />
-          <Property Name="UName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="UName" Type="varchar(max)" Nullable="false" />
           <Property Name="UURL" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="DName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DName" Type="varchar(max)" Nullable="false" />
           <Property Name="DURL" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Salary" Type="int" Nullable="false" />
           <Property Name="SalaryURL" Type="nvarchar(max)" Nullable="false" />
@@ -29,8 +29,7 @@
           <Property Name="TL3" Type="int" Nullable="false" />
           <Property Name="TL4" Type="int" Nullable="false" />
           <Property Name="TL5" Type="int" Nullable="false" />
-          <Property Name="TL6" Type="int" Nullable="false" />
-          <Property Name="ELLEVEL" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ELLEVEL" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="C" Type="int" Nullable="false" />
           <Property Name="E" Type="int" Nullable="false" />
           <Property Name="M" Type="int" Nullable="false" />
@@ -62,8 +61,8 @@
           <Property Name="CMSN" Type="int" Nullable="false" />
           <Property Name="EMSN" Type="int" Nullable="false" />
           <Property Name="CEMSN" Type="int" Nullable="false" />
-          <Property Name="City" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="PP" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="City" Type="varchar(max)" Nullable="false" />
+          <Property Name="PP" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Change" Type="nvarchar(max)" />
           <Property Name="lastCriterion" Type="nvarchar(max)" />
           <Property Name="rateOfThisYear" Type="nvarchar(max)" />
@@ -74,7 +73,7 @@
             <PropertyRef Name="DID" />
             <PropertyRef Name="Cname" />
           </Key>
-          <Property Name="DID" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="DID" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Cname" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="NewScoreData">
@@ -118,7 +117,7 @@
           <Property Name="identities" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="address" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="interestedDepart" Type="nvarchar(max)" />
-          <Property Name="isApplyCHU" Type="tinyint" Nullable="false" />
+          <Property Name="isApplyCHU" Type="int" Nullable="false" />
           <Property Name="gsat_Chinese" Type="int" Nullable="false" />
           <Property Name="gsat_English" Type="int" Nullable="false" />
           <Property Name="gsat_Math" Type="int" Nullable="false" />
@@ -131,18 +130,6 @@
           <Property Name="UGroup" Type="nvarchar(max)" Nullable="false" />
           <Property Name="createAt" Type="datetime" Nullable="false" />
         </EntityType>
-        <Association Name="FK_DC_D">
-          <End Role="D" Type="Self.D" Multiplicity="1" />
-          <End Role="DC" Type="Self.DC" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="D">
-              <PropertyRef Name="DID" />
-            </Principal>
-            <Dependent Role="DC">
-              <PropertyRef Name="DID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="PredictModelStoreContainer">
           <EntitySet Name="CG" EntityType="Self.CG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="D" EntityType="Self.D" Schema="dbo" store:Type="Tables" />
@@ -151,10 +138,6 @@
           <EntitySet Name="OldScoreData" EntityType="Self.OldScoreData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T" EntityType="Self.T" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserHistory" EntityType="Self.UserHistory" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_DC_D" Association="Self.FK_DC_D">
-            <End Role="D" EntitySet="D" />
-            <End Role="DC" EntitySet="DC" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -186,7 +169,7 @@
             <PropertyRef Name="DID" />
             <PropertyRef Name="Cname" />
           </Key>
-          <Property Name="DID" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="DID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Cname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="D" Relationship="PredictModel.FK_DC_D" FromRole="DC" ToRole="D" />
         </EntityType>
@@ -231,7 +214,7 @@
           <Property Name="identities" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="interestedDepart" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="isApplyCHU" Type="Boolean" Nullable="false" />
+          <Property Name="isApplyCHU" Type="Int32" Nullable="false" />
           <Property Name="gsat_Chinese" Type="Int32" Nullable="false" />
           <Property Name="gsat_English" Type="Int32" Nullable="false" />
           <Property Name="gsat_Math" Type="Int32" Nullable="false" />
@@ -248,10 +231,10 @@
           <Key>
             <PropertyRef Name="DID" />
           </Key>
-          <Property Name="DID" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
-          <Property Name="UName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="UName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="UURL" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="DURL" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Salary" Type="Int32" Nullable="false" />
           <Property Name="SalaryURL" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -260,8 +243,7 @@
           <Property Name="TL3" Type="Int32" Nullable="false" />
           <Property Name="TL4" Type="Int32" Nullable="false" />
           <Property Name="TL5" Type="Int32" Nullable="false" />
-          <Property Name="TL6" Type="Int32" Nullable="false" />
-          <Property Name="ELLEVEL" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ELLEVEL" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="C" Type="Int32" Nullable="false" />
           <Property Name="E" Type="Int32" Nullable="false" />
           <Property Name="M" Type="Int32" Nullable="false" />
@@ -293,8 +275,8 @@
           <Property Name="CMSN" Type="Int32" Nullable="false" />
           <Property Name="EMSN" Type="Int32" Nullable="false" />
           <Property Name="CEMSN" Type="Int32" Nullable="false" />
-          <Property Name="City" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PP" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PP" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Change" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="lastCriterion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="rateOfThisYear" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -432,7 +414,6 @@
                 <ScalarProperty Name="E" ColumnName="E" />
                 <ScalarProperty Name="C" ColumnName="C" />
                 <ScalarProperty Name="ELLEVEL" ColumnName="ELLEVEL" />
-                <ScalarProperty Name="TL6" ColumnName="TL6" />
                 <ScalarProperty Name="TL5" ColumnName="TL5" />
                 <ScalarProperty Name="TL4" ColumnName="TL4" />
                 <ScalarProperty Name="TL3" ColumnName="TL3" />
