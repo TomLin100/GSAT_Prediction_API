@@ -20,7 +20,6 @@ namespace GSATPrediction.Services
         {
             var history = new UserHistory()
             {
-                id = Guid.NewGuid(),
                 email = _signUp.email,
                 phone = _signUp.phoneNumber,
                 address = _signUp.address,

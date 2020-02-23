@@ -105,9 +105,9 @@ namespace GSATPrediction.Controllers.api
                 };
                 return Ok(output);
             }
-            catch (Exception ex)
+            catch (DbUpdateException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }           
         }
     }

@@ -14,7 +14,6 @@ namespace GSATPrediction.Models
     
     public partial class UserHistory
     {
-        public System.Guid id { get; set; }
         public string email { get; set; }
         public string Hlocation { get; set; }
         public string schoolName { get; set; }

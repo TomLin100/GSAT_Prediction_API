@@ -25,7 +25,6 @@ namespace GSATPrediction.Services
         public SmsService()
         {
             apiURL = "http://api.message.net.tw/send.php";
-            //apiURL = "http://api.twsms.com/json/sms_send.php";
             id = ConfigurationManager.AppSettings["smsid"];
             pwd = ConfigurationManager.AppSettings["smspwd"];
         }
@@ -35,14 +34,11 @@ namespace GSATPrediction.Services
 
             NameValueCollection postParams = HttpUtility.ParseQueryString(string.Empty);
             postParams.Add("id", id);
-            //postParams.Add("username", id);
             postParams.Add("password", pwd);
             postParams.Add("tel", PhoneNumber);
-            //postParams.Add("message", msgContent);
             postParams.Add("msg", msgContent);
             postParams.Add("mtype", "G");
             postParams.Add("encoding", "utf8");
-            //postParams.Add("mobile", PhoneNumber);
             
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(apiURL);
@@ -91,7 +87,7 @@ namespace GSATPrediction.Services
             db.Validations.Add(data);
             db.SaveChanges();
             
-            return $"您的驗證碼為 {code}";
+            return $"[職涯型落點分析系統] 您的驗證碼為 {code}，請盡速到系統中輸入您的驗證碼";
         }
 
         public Dictionary<string, int> responseFormat(string response)

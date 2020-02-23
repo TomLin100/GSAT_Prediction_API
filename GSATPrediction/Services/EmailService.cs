@@ -39,7 +39,7 @@ namespace GSATPrediction.Services
 
             mail.To.Add(ReceiveAddress);
             mail.Subject = "升大學職涯型落點分析-免費密勝秘笈";
-            mail.Attachments.Add(new Attachment(@"D:\如何成為推甄中的亮點(2020twohr).ppt"));
+            //mail.Attachments.Add(new Attachment(@"D:\如何成為推甄中的亮點-中華大學俞征武教授.pdf"));
             var view = AlternateView.CreateAlternateViewFromString(this.mailContent,Encoding.UTF8,"text/html");
             mail.AlternateViews.Add(view);
             mail.IsBodyHtml = true;

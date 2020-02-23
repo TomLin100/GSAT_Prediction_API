@@ -107,12 +107,11 @@
         </EntityType>
         <EntityType Name="UserHistory">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="email" />
           </Key>
-          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="email" Type="varchar(max)" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Hlocation" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="schoolName" Type="nchar" MaxLength="10" />
+          <Property Name="schoolName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="phone" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="identities" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="address" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -214,12 +213,11 @@
         </EntityType>
         <EntityType Name="UserHistory">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="email" />
           </Key>
-          <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Hlocation" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="schoolName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="schoolName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="phone" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="identities" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -369,7 +367,6 @@
             <EntityTypeMapping TypeName="IsTypeOf(PredictModel.UserHistory)">
               <MappingFragment StoreEntitySet="UserHistory">
                 <ScalarProperty Name="createAt" ColumnName="createAt" />
-                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="UGroup" ColumnName="UGroup" />
                 <ScalarProperty Name="ELlevel" ColumnName="ELlevel" />
                 <ScalarProperty Name="Ulocation" ColumnName="Ulocation" />

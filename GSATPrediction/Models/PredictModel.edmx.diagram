@@ -5,15 +5,15 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="7db800f14f7a4476afb2970c9d92ab41" Name="Diagram1" ZoomLevel="100">
-        <EntityTypeShape EntityType="PredictModel.CG" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PredictModel.CG" Width="1.5" PointX="4.375" PointY="0.75" />
         <EntityTypeShape EntityType="PredictModel.DC" Width="1.5" PointX="6" PointY="8.25" />
-        <EntityTypeShape EntityType="PredictModel.NewScoreData" Width="1.5" PointX="5.75" PointY="3.75" />
+        <EntityTypeShape EntityType="PredictModel.NewScoreData" Width="1.5" PointX="4.25" PointY="3" />
         <EntityTypeShape EntityType="PredictModel.OldScoreData" Width="1.5" PointX="0.75" PointY="6.75" />
-        <EntityTypeShape EntityType="PredictModel.T" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PredictModel.T" Width="1.5" PointX="6.625" PointY="0.5" />
         <EntityTypeShape EntityType="PredictModel.UserHistory" Width="1.5" PointX="1.125" PointY="0.75" />
         <EntityTypeShape EntityType="PredictModel.D" Width="1.5" PointX="3.75" PointY="6.75" />
         <AssociationConnector Association="PredictModel.FK_DC_D" />
-        <EntityTypeShape EntityType="PredictModel.Validation" Width="1.5" PointX="8.375" PointY="3.75" />
+        <EntityTypeShape EntityType="PredictModel.Validation" Width="1.5" PointX="6.75" PointY="3" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
