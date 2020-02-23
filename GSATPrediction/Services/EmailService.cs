@@ -39,14 +39,15 @@ namespace GSATPrediction.Services
 
             mail.To.Add(ReceiveAddress);
             mail.Subject = "升大學職涯型落點分析-免費密勝秘笈";
-            mail.Attachments.Add(new Attachment(@"D:\test.pdf"));
+            mail.Attachments.Add(new Attachment(@"D:\如何成為推甄中的亮點(2020twohr).ppt"));
             var view = AlternateView.CreateAlternateViewFromString(this.mailContent,Encoding.UTF8,"text/html");
             mail.AlternateViews.Add(view);
+            mail.IsBodyHtml = true;
 
             //設定SMTP
             SmtpClient smtp = new SmtpClient()
             {
-                //UseDefaultCredentials = false,
+                UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(this.mailaddress,this.mailPwd),
                 Port = 587,
                 Host = "smtp.gmail.com",
