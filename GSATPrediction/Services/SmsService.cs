@@ -32,16 +32,18 @@ namespace GSATPrediction.Services
         public string send()
         {
             msgContent = generateContent();
-           
+
             NameValueCollection postParams = HttpUtility.ParseQueryString(string.Empty);
             postParams.Add("id", id);
             //postParams.Add("username", id);
             postParams.Add("password", pwd);
-            postParams.Add("mtype", "G");
+            postParams.Add("tel", PhoneNumber);
             //postParams.Add("message", msgContent);
             postParams.Add("msg", msgContent);
+            postParams.Add("mtype", "G");
+            postParams.Add("encoding", "utf8");
             //postParams.Add("mobile", PhoneNumber);
-            postParams.Add("tel", PhoneNumber);
+            
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(apiURL);
             request.Method = "POST";
@@ -92,7 +94,7 @@ namespace GSATPrediction.Services
             return $"您的驗證碼為 {code}";
         }
 
-        private Dictionary<string, int> responseFormat(string response)
+        public Dictionary<string, int> responseFormat(string response)
         {
             string[] data = response.Split('\n');
             string[] coda = data[1].Split('=');

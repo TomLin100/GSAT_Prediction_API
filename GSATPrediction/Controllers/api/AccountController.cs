@@ -22,8 +22,64 @@ namespace GSATPrediction.Controllers.api
         {
             sms.PhoneNumber = validate.phone;
             var result = sms.send();
+            var code = sms.responseFormat(result);
+            if(code["smsStatus"] == 0)
+            {
+                OutputViewModel output = new OutputViewModel()
+                {
+                    status = HttpStatusCode.OK,
+                    input = null,
+                    validate = validate,
+                    message = "發送成功"
+                };
+                return Ok(output);
+            }
+            else
+            {
+                return InternalServerError();
+            }            
+        }
 
-            return Ok(result);
+
+        [Route("validate")]
+        public IHttpActionResult PostValidate([FromBody] ValidateInputViewModel validate)
+        {
+            var data = db.Validations.Find(validate.phone);
+            if(data == null)
+            {
+                return NotFound();
+            }
+            else if(data.code == validate.code)
+            {
+                data.isValidate = "Y";
+                try
+                {
+                    db.SaveChanges();
+                    OutputViewModel output = new OutputViewModel()
+                    {
+                        status = HttpStatusCode.OK,
+                        input = null,
+                        validate = validate,
+                        message = "驗證成功"
+                    };
+                    return Ok(output);
+                }
+                catch (DbUpdateException ex)
+                {
+                    return InternalServerError(ex);
+                }
+            }
+            else
+            {
+                OutputViewModel output = new OutputViewModel()
+                {
+                    status = HttpStatusCode.Created,
+                    input = null,
+                    validate = validate,
+                    message = "驗證失敗"
+                };
+                return Ok(output);
+            }
         }
 
         [Route("store")]

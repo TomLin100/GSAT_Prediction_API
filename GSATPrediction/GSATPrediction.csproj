@@ -131,7 +131,6 @@
     <Compile Include="Models\OldScoreData.cs">
       <DependentUpon>PredictModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\OutputViewModel.cs" />
     <Compile Include="Models\PredictionData.cs" />
     <Compile Include="Models\PredictModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -149,7 +148,6 @@
       <DependentUpon>PredictModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\QueryData.cs" />
-    <Compile Include="Models\SignUpViewModel.cs" />
     <Compile Include="Models\T.cs">
       <DependentUpon>PredictModel.tt</DependentUpon>
     </Compile>
@@ -163,6 +161,8 @@
     <Compile Include="Services\DataMapper.cs" />
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\SmsService.cs" />
+    <Compile Include="ViewModels\OutputViewModel.cs" />
+    <Compile Include="ViewModels\SignUpViewModel.cs" />
     <Compile Include="ViewModels\ValidateInputViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
