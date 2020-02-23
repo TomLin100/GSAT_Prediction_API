@@ -130,6 +130,14 @@
           <Property Name="UGroup" Type="nvarchar(max)" Nullable="false" />
           <Property Name="createAt" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="Validation">
+          <Key>
+            <PropertyRef Name="phone" />
+          </Key>
+          <Property Name="phone" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="code" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="isValidate" Type="varchar" MaxLength="2" />
+        </EntityType>
         <EntityContainer Name="PredictModelStoreContainer">
           <EntitySet Name="CG" EntityType="Self.CG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="D" EntityType="Self.D" Schema="dbo" store:Type="Tables" />
@@ -138,6 +146,7 @@
           <EntitySet Name="OldScoreData" EntityType="Self.OldScoreData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T" EntityType="Self.T" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserHistory" EntityType="Self.UserHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Validation" EntityType="Self.Validation" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -155,6 +164,7 @@
             <End Role="D" EntitySet="D" />
             <End Role="DC" EntitySet="DCs" />
           </AssociationSet>
+          <EntitySet Name="Validations" EntityType="PredictModel.Validation" />
         </EntityContainer>
         <EntityType Name="CG">
           <Key>
@@ -295,6 +305,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Validation">
+          <Key>
+            <PropertyRef Name="phone" />
+          </Key>
+          <Property Name="phone" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="code" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="isValidate" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -426,6 +444,15 @@
                 <ScalarProperty Name="UURL" ColumnName="UURL" />
                 <ScalarProperty Name="UName" ColumnName="UName" />
                 <ScalarProperty Name="DID" ColumnName="DID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Validations">
+            <EntityTypeMapping TypeName="PredictModel.Validation">
+              <MappingFragment StoreEntitySet="Validation">
+                <ScalarProperty Name="isValidate" ColumnName="isValidate" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

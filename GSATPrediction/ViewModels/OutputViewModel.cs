@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 
-namespace GSATPrediction.Models
+namespace GSATPrediction.ViewModels
 {
     public class OutputViewModel
     {

@@ -32,5 +32,6 @@ namespace GSATPrediction.Models
         public virtual DbSet<T> T { get; set; }
         public virtual DbSet<UserHistory> UserHistories { get; set; }
         public virtual DbSet<D> D { get; set; }
+        public virtual DbSet<Validation> Validations { get; set; }
     }
 }

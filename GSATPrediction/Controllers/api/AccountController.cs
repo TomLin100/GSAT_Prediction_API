@@ -1,5 +1,6 @@
 using GSATPrediction.Models;
 using GSATPrediction.Services;
+using GSATPrediction.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
@@ -14,6 +15,16 @@ namespace GSATPrediction.Controllers.api
     public class AccountController : ApiController
     {
         private PredictEntities db = new PredictEntities();
+        private SmsService sms = new SmsService();
+
+        [Route("getValidateCode")]
+        public IHttpActionResult PostValidateCode([FromBody] ValidateInputViewModel validate)
+        {
+            sms.PhoneNumber = validate.phone;
+            var result = sms.send();
+
+            return Ok(result);
+        }
 
         [Route("store")]
         public IHttpActionResult Post([FromBody] SignUpViewModel signUp)

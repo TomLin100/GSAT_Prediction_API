@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace GSATPrediction.Models
+namespace GSATPrediction.ViewModels
 {
     public class SignUpViewModel
     {
