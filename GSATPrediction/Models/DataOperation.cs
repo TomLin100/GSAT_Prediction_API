@@ -188,7 +188,7 @@ namespace PredictionAPI.Models
                     " AND D.ELLEVEL >= '" + EL + "' " + "AND D.TL1 <= " + level[0].ToString() +
                     " AND D.TL2 <= " + level[1].ToString() + " AND D.TL3 <= " + level[2].ToString() +
                     " AND D.TL5 <= " + level[3].ToString() + " AND D.TL4 <= " + level[4].ToString() +
-                    " AND D.Salary >= " + expectedSalary.ToString() +
+                    " AND D.Salary >= " + expectedSalary.ToString() + " AND D.lastCriterion IS NOT NULL" +
                     " AND D.C <= " + Convert.ToString(oldScore["國文"] + 1) + " AND D.E <= " + Convert.ToString(oldScore["英文"] + 1) +
                     " AND D.M <= " + Convert.ToString(oldScore["數學"] + 1) + " AND D.S <= " + Convert.ToString(oldScore["社會"] + 1) +
                     " AND D.N <= " + Convert.ToString(oldScore["自然"] + 1) + " AND D.CE <= " + Convert.ToString(oldScore["OCE"] + 1) +
@@ -314,7 +314,7 @@ namespace PredictionAPI.Models
                 resultData.durl = table.Rows[i]["DURL"].ToString().Trim();
                 resultData.salary = Convert.ToInt32(table.Rows[i]["Salary"]);
                 resultData.salaryUrl = (table.Rows[i]["SalaryURL"].ToString().Trim() == Convert.ToString(0) ? null : table.Rows[i]["SalaryURL"].ToString().Trim());
-                resultData.change = (table.Rows[i]["Change"].Equals(string.Empty) ? null : table.Rows[i]["Change"].ToString());
+                resultData.change = (table.Rows[i]["Change"].Equals(string.Empty) ? null : table.Rows[i]["Change"].ToString()); //TODO:
                 resultData.lastCriterion = table.Rows[i]["lastCriterion"].ToString();
                 resultData.rateOfThisYear = table.Rows[i]["rateOfThisYear"].ToString();
                 resultData.examURL = table.Rows[i]["ExamURL"].ToString();

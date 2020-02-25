@@ -8,7 +8,7 @@ namespace GSATPrediction.ViewModels
 {
     public class OutputViewModel
     {
-        public HttpStatusCode status { get; set; }
+        public int status { get; set; }
         public SignUpViewModel input { get; set; }
         public ValidateInputViewModel validate { get; set; }
 

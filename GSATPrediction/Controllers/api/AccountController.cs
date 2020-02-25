@@ -7,6 +7,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Web.Http;
 
 namespace GSATPrediction.Controllers.api
@@ -18,26 +19,84 @@ namespace GSATPrediction.Controllers.api
         private SmsService sms = new SmsService();
 
         [Route("getValidateCode")]
-        public IHttpActionResult PostValidateCode([FromBody] ValidateInputViewModel validate)
+        public HttpResponseMessage PostValidateCode([FromBody] ValidateInputViewModel validate)
         {
-            sms.PhoneNumber = validate.phone;
-            var result = sms.send();
-            var code = sms.responseFormat(result);
-            if(code["smsStatus"] == 0)
+            HttpResponseMessage resp = null;
+            var hasPhone = db.Validations.Find(validate.phone);
+            if(hasPhone == null)
             {
-                OutputViewModel output = new OutputViewModel()
+                sms.PhoneNumber = validate.phone;
+                var result = sms.send();
+                var code = sms.responseFormat(result);
+                var data = new Validation()
                 {
-                    status = HttpStatusCode.OK,
-                    input = null,
-                    validate = validate,
-                    message = "發送成功"
+                    phone = validate.phone,
+                    code = sms.code
                 };
-                return Ok(output);
+                db.Validations.Add(data);
+                try
+                {
+                    db.SaveChanges();
+                    OutputViewModel output = new OutputViewModel()
+                    {
+                        status = Convert.ToInt32(HttpStatusCode.OK),
+                        input = null,
+                        validate = validate,
+                        message = "發送成功，請至您的手機查看驗證碼"
+                    };
+                    resp = new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new ObjectContent<OutputViewModel>(output, new JsonMediaTypeFormatter())
+                    };
+                }
+                catch (DbUpdateException ex)
+                {
+                    OutputViewModel output = new OutputViewModel()
+                    {
+                        status = Convert.ToInt32(HttpStatusCode.Conflict),
+                        input = null,
+                        validate = validate,
+                        message = "此門號已被驗證過，無法再驗證"
+                    };
+                    resp = new HttpResponseMessage(HttpStatusCode.Conflict)
+                    {
+                        Content = new ObjectContent<OutputViewModel>(output, new JsonMediaTypeFormatter())
+                    };
+                }
             }
             else
             {
-                return InternalServerError();
-            }            
+                OutputViewModel output = new OutputViewModel()
+                {
+                    status = Convert.ToInt32(HttpStatusCode.BadRequest),
+                    input = null,
+                    validate = validate,
+                    message = "此門號已被驗證過，無法再驗證"
+                };
+                resp = new HttpResponseMessage(HttpStatusCode.BadRequest)
+                {
+                    Content = new ObjectContent<OutputViewModel>(output, new JsonMediaTypeFormatter())
+                };
+            }
+            
+            //if (code["smsStatus"] == 0)
+            //{
+            //    OutputViewModel output = new OutputViewModel()
+            //    {
+            //        status = HttpStatusCode.OK,
+            //        input = null,
+            //        validate = validate,
+            //        message = "發送成功"
+            //    };
+            //    return Ok(output);
+            //}
+            //else
+            //{
+            //    return InternalServerError();
+            //}
+
+           
+            return resp;
         }
 
 
@@ -57,7 +116,7 @@ namespace GSATPrediction.Controllers.api
                     db.SaveChanges();
                     OutputViewModel output = new OutputViewModel()
                     {
-                        status = HttpStatusCode.OK,
+                        status = Convert.ToInt32(HttpStatusCode.OK),
                         input = null,
                         validate = validate,
                         message = "驗證成功"
@@ -73,7 +132,7 @@ namespace GSATPrediction.Controllers.api
             {
                 OutputViewModel output = new OutputViewModel()
                 {
-                    status = HttpStatusCode.Created,
+                    status = Convert.ToInt32(HttpStatusCode.Created),
                     input = null,
                     validate = validate,
                     message = "驗證失敗"
@@ -93,14 +152,15 @@ namespace GSATPrediction.Controllers.api
                 db.SaveChanges();
 
                 // TODO: 寄信會影響使用者體驗
-                EmailService email = new EmailService();
-                email.ReceiveAddress = signUp.email;
-                email.send();
+                //EmailService email = new EmailService();
+                //email.ReceiveAddress = signUp.email;
+                //email.send();
 
                 OutputViewModel output = new OutputViewModel()
                 {
-                    status = HttpStatusCode.OK,
+                    status = Convert.ToInt32(HttpStatusCode.OK),
                     input = signUp,
+                    validate=null,
                     message = "資料儲存成功"
                 };
                 return Ok(output);

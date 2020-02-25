@@ -111,22 +111,23 @@
           </Key>
           <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Hlocation" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="schoolName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="schoolName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="phone" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="identities" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="address" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="interestedDepart" Type="nvarchar(max)" />
           <Property Name="isApplyCHU" Type="int" Nullable="false" />
-          <Property Name="gsat_Chinese" Type="int" Nullable="false" />
-          <Property Name="gsat_English" Type="int" Nullable="false" />
-          <Property Name="gsat_Math" Type="int" Nullable="false" />
-          <Property Name="gsat_Science" Type="int" Nullable="false" />
-          <Property Name="gsat_Society" Type="int" Nullable="false" />
-          <Property Name="property" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="salary" Type="int" Nullable="false" />
-          <Property Name="Ulocation" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="ELlevel" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="UGroup" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="gsat_Chinese" Type="int" />
+          <Property Name="gsat_English" Type="int" />
+          <Property Name="gsat_Math" Type="int" />
+          <Property Name="gsat_Science" Type="int" />
+          <Property Name="gsat_Society" Type="int" />
+          <Property Name="property" Type="nvarchar" MaxLength="50" />
+          <Property Name="salary" Type="int" />
+          <Property Name="Ulocation" Type="varchar" MaxLength="50" />
+          <Property Name="ELlevel" Type="varchar" MaxLength="50" />
+          <Property Name="UGroup" Type="nvarchar(max)" />
           <Property Name="createAt" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Validation">
@@ -217,23 +218,24 @@
           </Key>
           <Property Name="email" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Hlocation" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="schoolName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="schoolName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="phone" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="identities" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="interestedDepart" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="isApplyCHU" Type="Int32" Nullable="false" />
-          <Property Name="gsat_Chinese" Type="Int32" Nullable="false" />
-          <Property Name="gsat_English" Type="Int32" Nullable="false" />
-          <Property Name="gsat_Math" Type="Int32" Nullable="false" />
-          <Property Name="gsat_Science" Type="Int32" Nullable="false" />
-          <Property Name="gsat_Society" Type="Int32" Nullable="false" />
-          <Property Name="property" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="salary" Type="Int32" Nullable="false" />
-          <Property Name="Ulocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ELlevel" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UGroup" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="gsat_Chinese" Type="Int32" />
+          <Property Name="gsat_English" Type="Int32" />
+          <Property Name="gsat_Math" Type="Int32" />
+          <Property Name="gsat_Science" Type="Int32" />
+          <Property Name="gsat_Society" Type="Int32" />
+          <Property Name="property" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="salary" Type="Int32" />
+          <Property Name="Ulocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ELlevel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UGroup" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="createAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="D">
           <Key>
@@ -366,6 +368,7 @@
           <EntitySetMapping Name="UserHistories">
             <EntityTypeMapping TypeName="IsTypeOf(PredictModel.UserHistory)">
               <MappingFragment StoreEntitySet="UserHistory">
+                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="createAt" ColumnName="createAt" />
                 <ScalarProperty Name="UGroup" ColumnName="UGroup" />
                 <ScalarProperty Name="ELlevel" ColumnName="ELlevel" />

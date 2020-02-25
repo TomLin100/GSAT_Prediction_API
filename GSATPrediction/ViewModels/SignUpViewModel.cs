@@ -24,8 +24,9 @@ namespace GSATPrediction.ViewModels
         public string email { get; set; }
         public string phoneNumber { get; set; }
         public string address { get; set; }
+        public string name { get; set; }
         public string interestedDepart { get; set; }
-        public bool isApplyCHU { get; set; }
+        public int isApplyCHU { get; set; }
         public string location { get; set; }
         public string schoolName { get; set; }
         public string identity { get; set; }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Configuration;
+using System.Data.Entity.Infrastructure;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -17,6 +18,7 @@ namespace GSATPrediction.Services
         private string id;
         private string pwd;
         private string msgContent;
+        public string code { get; private set; }
 
         private PredictEntities db = new PredictEntities();
 
@@ -31,38 +33,36 @@ namespace GSATPrediction.Services
         public string send()
         {
             msgContent = generateContent();
-
-            NameValueCollection postParams = HttpUtility.ParseQueryString(string.Empty);
-            postParams.Add("id", id);
-            postParams.Add("password", pwd);
-            postParams.Add("tel", PhoneNumber);
-            postParams.Add("msg", msgContent);
-            postParams.Add("mtype", "G");
-            postParams.Add("encoding", "utf8");
             
+                NameValueCollection postParams = HttpUtility.ParseQueryString(string.Empty);
+                postParams.Add("id", id);
+                postParams.Add("password", pwd);
+                postParams.Add("tel", PhoneNumber);
+                postParams.Add("msg", msgContent);
+                postParams.Add("mtype", "G");
+                postParams.Add("encoding", "utf8");
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(apiURL);
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = postParams.ToString().Length;
 
-            byte[] byteArray = Encoding.UTF8.GetBytes(postParams.ToString());
-            using (Stream reqStream = request.GetRequestStream())
-            {
-                reqStream.Write(byteArray, 0, byteArray.Length);
-            }
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(apiURL);
+                request.Method = "POST";
+                request.ContentType = "application/x-www-form-urlencoded";
+                request.ContentLength = postParams.ToString().Length;
 
-            //API回傳的字串
-            string responseStr = "";
-            using (WebResponse response = request.GetResponse())
-            {
-                using (StreamReader sr = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+                byte[] byteArray = Encoding.UTF8.GetBytes(postParams.ToString());
+                using (Stream reqStream = request.GetRequestStream())
                 {
-                    responseStr = sr.ReadToEnd();
+                    reqStream.Write(byteArray, 0, byteArray.Length);
                 }
-            }
-
-            return responseStr;
+                //API回傳的字串
+                string responseStr = "";
+                using (WebResponse response = request.GetResponse())
+                {
+                    using (StreamReader sr = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+                    {
+                        responseStr = sr.ReadToEnd();
+                    }
+                }
+                return responseStr;          
         }
 
         private string generateContent()
@@ -79,15 +79,8 @@ namespace GSATPrediction.Services
             {
                 code = code + tmp.ToString();
             }
-            var data = new Validation()
-            {
-                phone = PhoneNumber,
-                code = code
-            };
-            db.Validations.Add(data);
-            db.SaveChanges();
-            
-            return $"[職涯型落點分析系統] 您的驗證碼為 {code}，請盡速到系統中輸入您的驗證碼";
+            this.code = code;
+            return $"[職涯型落點分析系統] 您的驗證碼為 {code}，請盡速到系統中輸入您的驗證碼";           
         }
 
         public Dictionary<string, int> responseFormat(string response)

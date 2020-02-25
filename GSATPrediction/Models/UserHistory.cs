@@ -22,16 +22,17 @@ namespace GSATPrediction.Models
         public string address { get; set; }
         public string interestedDepart { get; set; }
         public int isApplyCHU { get; set; }
-        public int gsat_Chinese { get; set; }
-        public int gsat_English { get; set; }
-        public int gsat_Math { get; set; }
-        public int gsat_Science { get; set; }
-        public int gsat_Society { get; set; }
+        public Nullable<int> gsat_Chinese { get; set; }
+        public Nullable<int> gsat_English { get; set; }
+        public Nullable<int> gsat_Math { get; set; }
+        public Nullable<int> gsat_Science { get; set; }
+        public Nullable<int> gsat_Society { get; set; }
         public string property { get; set; }
-        public int salary { get; set; }
+        public Nullable<int> salary { get; set; }
         public string Ulocation { get; set; }
         public string ELlevel { get; set; }
         public string UGroup { get; set; }
         public System.DateTime createAt { get; set; }
+        public string name { get; set; }
     }
 }
