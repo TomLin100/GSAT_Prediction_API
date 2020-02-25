@@ -14,8 +14,15 @@ namespace GSATPrediction.Models
     
     public partial class Validation
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Validation()
+        {
+            this.isValidate = "(無)";
+        }
+    
         public string phone { get; set; }
         public string code { get; set; }
         public string isValidate { get; set; }
+        public System.DateTime createAt { get; set; }
     }
 }

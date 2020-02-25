@@ -137,6 +137,7 @@
           <Property Name="phone" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="code" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="isValidate" Type="varchar" MaxLength="2" />
+          <Property Name="createAt" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityContainer Name="PredictModelStoreContainer">
           <EntitySet Name="CG" EntityType="Self.CG" Schema="dbo" store:Type="Tables" />
@@ -311,7 +312,8 @@
           </Key>
           <Property Name="phone" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="code" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="isValidate" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="isValidate" Type="String" MaxLength="2" FixedLength="false" Unicode="false" DefaultValue="(無)" />
+          <Property Name="createAt" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -450,6 +452,7 @@
           <EntitySetMapping Name="Validations">
             <EntityTypeMapping TypeName="PredictModel.Validation">
               <MappingFragment StoreEntitySet="Validation">
+                <ScalarProperty Name="createAt" ColumnName="createAt" />
                 <ScalarProperty Name="isValidate" ColumnName="isValidate" />
                 <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="phone" ColumnName="phone" />

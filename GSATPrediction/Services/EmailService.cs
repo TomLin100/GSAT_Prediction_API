@@ -47,7 +47,7 @@ namespace GSATPrediction.Services
             //設定SMTP
             SmtpClient smtp = new SmtpClient()
             {
-                UseDefaultCredentials = false,
+                //UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(this.mailaddress,this.mailPwd),
                 Port = 587,
                 Host = "smtp.gmail.com",
